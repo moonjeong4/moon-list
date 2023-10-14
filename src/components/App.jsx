@@ -18,7 +18,7 @@ function App() {
   function handleToggleItem(id) {
     setItems((items) =>
       items.map((item) =>
-        item.id === id ? { ...item, packed: !item.packed } : item,
+        item.id === id ? { ...item, checked: !item.checked } : item,
       ),
     );
   }
@@ -31,7 +31,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen bg-violet-950">
+    <div className="h-screen bg-sky-950">
       <Logo />
       <Form onAddItems={handleAddItems} />
       <List

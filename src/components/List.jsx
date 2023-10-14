@@ -13,13 +13,13 @@ function List({ items, onDeleteItem, onToggleItem, onClearItems }) {
       .slice()
       .sort((a, b) => a.description.localeCompare(b.description));
 
-  if (sortBy === 'packed')
+  if (sortBy === 'checked')
     sortedItems = items
       .slice()
-      .sort((a, b) => Number(a.packed) - Number(b.packed));
+      .sort((a, b) => Number(a.checked) - Number(b.checked));
   return (
-    <div>
-      <ul>
+    <div className="mb-2 flex flex-col items-center justify-between">
+      <ul className="grid-cols-auto grid w-4/5 content-start justify-center gap-2 overflow-scroll py-8">
         {sortedItems.map((item) => (
           <Item
             item={item}
@@ -31,12 +31,21 @@ function List({ items, onDeleteItem, onToggleItem, onClearItems }) {
       </ul>
 
       <div>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="mr-3 rounded-lg border border-gray-300 p-1.5"
+        >
           <option value="input">Sort by input order</option>
           <option value="description">Sort by description</option>
-          <option value="packed">Sort by packed status</option>
+          <option value="checked">Sort by checked status</option>
         </select>
-        <button onClick={onClearItems}>Clear list</button>
+        <button
+          onClick={onClearItems}
+          className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
+        >
+          Clear list
+        </button>
       </div>
     </div>
   );
