@@ -1,32 +1,43 @@
 import { useState } from 'react';
 import Item from './Item';
+import { useQuery } from '@tanstack/react-query';
+import { getItems } from '../services/apiItems';
+import Spinner from './Spinner';
 
-function List({ items, onDeleteItem, onToggleItem, onClearItems }) {
+function List() {
   const [sortBy, setSortBy] = useState('input');
 
-  let sortedItems;
+  const {
+    isLoading,
+    data: listItems,
+    error,
+  } = useQuery({
+    queryKey: ['items'],
+    queryFn: getItems,
+  });
 
-  if (sortBy === 'input') sortedItems = items;
+  if (isLoading) return <Spinner />;
+  console.log(listItems);
 
-  if (sortBy === 'description')
-    sortedItems = items
-      .slice()
-      .sort((a, b) => a.description.localeCompare(b.description));
+  // let sortedItems;
 
-  if (sortBy === 'checked')
-    sortedItems = items
-      .slice()
-      .sort((a, b) => Number(a.checked) - Number(b.checked));
+  // if (sortBy === 'input') sortedItems = items;
+
+  // if (sortBy === 'description')
+  //   sortedItems = items
+  //     .slice()
+  //     .sort((a, b) => a.description.localeCompare(b.description));
+
+  // if (sortBy === 'checked')
+  //   sortedItems = items
+  //     .slice()
+  //     .sort((a, b) => Number(a.checked) - Number(b.checked));
+
   return (
-    <div className="mb-2 flex flex-col items-center justify-between">
-      <ul className="grid-cols-auto grid w-4/5 content-start justify-center gap-2 overflow-scroll py-8">
-        {sortedItems.map((item) => (
-          <Item
-            item={item}
-            onDeleteItem={onDeleteItem}
-            onToggleItem={onToggleItem}
-            key={item.id}
-          />
+    <div className="max-h-higher mb-2 flex flex-col items-center justify-between overflow-y-auto">
+      <ul className="grid-cols-auto grid w-4/5 content-start justify-center gap-5 overflow-scroll py-8">
+        {listItems.map((item) => (
+          <Item item={item} key={item.id} />
         ))}
       </ul>
 
@@ -41,7 +52,7 @@ function List({ items, onDeleteItem, onToggleItem, onClearItems }) {
           <option value="checked">Sort by checked status</option>
         </select>
         <button
-          onClick={onClearItems}
+          // onClick={onClearItems}
           className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
         >
           Clear list
@@ -49,6 +60,14 @@ function List({ items, onDeleteItem, onToggleItem, onClearItems }) {
       </div>
     </div>
   );
+
+  // return (
+  //   <div>
+  //     {listItems.map((listItem) => (
+  //       <div key={listItem.id}>{listItem.description}</div>
+  //     ))}
+  //   </div>
+  // );
 }
 
 export default List;

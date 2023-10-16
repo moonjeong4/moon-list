@@ -6,6 +6,9 @@ export default {
       gridTemplateColumns: {
         auto: 'repeat(auto-fit, minmax(200px, 1fr))',
       },
+      maxHeight: {
+        higher: '36rem',
+      },
     },
   },
   plugins: [],
