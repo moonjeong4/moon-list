@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
+import Modal from '../ui/Modal';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,36 +48,38 @@ function App() {
   // }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <div className="h-screen bg-sky-950">
-        <Logo />
-        <Form />
-        <List />
-        {/* <Stats /> */}
-      </div>
+    <Modal>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <div className="h-screen bg-sky-950">
+          <Logo />
+          <Form />
+          <List />
+          {/* <Stats /> */}
+        </div>
 
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: '8px' }}
-        toastOptions={{
-          success: {
-            duration: 1500,
-          },
-          error: {
-            duration: 3000,
-          },
-          style: {
-            fontSize: '16px',
-            maxWidth: '500px',
-            padding: '16px 24px',
-            backgroundColor: '#fff',
-            color: '#374151',
-          },
-        }}
-      />
-    </QueryClientProvider>
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: '8px' }}
+          toastOptions={{
+            success: {
+              duration: 1500,
+            },
+            error: {
+              duration: 3000,
+            },
+            style: {
+              fontSize: '16px',
+              maxWidth: '500px',
+              padding: '16px 24px',
+              backgroundColor: '#fff',
+              color: '#374151',
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </Modal>
   );
 }
 

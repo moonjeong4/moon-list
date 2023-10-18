@@ -1,20 +1,12 @@
 import { useState } from 'react';
 import Item from './Item';
-import { useQuery } from '@tanstack/react-query';
-import { getItems } from '../services/apiItems';
-import Spinner from './Spinner';
+import Spinner from '../ui/Spinner';
+import { useItems } from './useItems';
 
 function List() {
   const [sortBy, setSortBy] = useState('input');
 
-  const {
-    isLoading,
-    data: listItems,
-    error,
-  } = useQuery({
-    queryKey: ['items'],
-    queryFn: getItems,
-  });
+  const { isLoading, listItems } = useItems(); // can reuse like this in anywhere!
 
   if (isLoading) return <Spinner />;
   console.log(listItems);

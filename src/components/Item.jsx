@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteItem } from '../services/apiItems';
 import toast from 'react-hot-toast';
+import Modal from '../ui/Modal';
+import ConfirmDelete from '../ui/ConfirmDelete';
 
 export default function Item({ item }) {
   const { id: itemId } = item;
@@ -30,9 +32,18 @@ export default function Item({ item }) {
       <span className={item.checked ? 'line-through' : ''}>
         {item.description}
       </span>
-      <button onClick={() => mutate(itemId)} disabled={isDeleting}>
-        ❌
-      </button>
+
+      <Modal.Open>
+        <button>❌</button>
+      </Modal.Open>
+      <Modal.Window>
+        <ConfirmDelete
+          resourceName={item.description}
+          disabled={isDeleting}
+          onConfirm={() => mutate(itemId)}
+          itemId={itemId}
+        />
+      </Modal.Window>
     </li>
   );
 }
