@@ -12,7 +12,7 @@ const StyledModal = styled.div`
   background-color: #fff;
   border-radius: 9px;
   box-shadow: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.4);
-  padding: 3.2rem 4rem;
+  padding: 1.6rem 2rem;
   transition: all 0.5s;
 `;
 
@@ -22,7 +22,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4px);
   z-index: 1000;
   transition: all 0.5s;
@@ -40,13 +40,16 @@ const Button = styled.button`
   right: 1.9rem;
 
   &:hover {
-    background-color: #f9fafb;
+    background-color: #f3f4f6;
   }
 
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    color: #6b7280;
+    /* Sometimes we need both */
+    /* fill: var(--color-grey-500);
+    stroke: var(--color-grey-500); */
+    color: #9ca3af;
   }
 `;
 

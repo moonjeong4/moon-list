@@ -1,6 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
-import { createItem, getItems } from '../services/apiItems';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createItem } from '../services/apiItems';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 

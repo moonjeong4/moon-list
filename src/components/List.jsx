@@ -2,11 +2,15 @@ import { useState } from 'react';
 import Item from './Item';
 import Spinner from '../ui/Spinner';
 import { useItems } from './useItems';
+import { useDeleteItems } from './useDeleteItems';
+import Modal from '../ui/Modal';
+import ConfirmDelete from '../ui/ConfirmDelete';
 
 function List() {
   const [sortBy, setSortBy] = useState('input');
 
   const { isLoading, listItems } = useItems(); // can reuse like this in anywhere!
+  const { isDeleting, mutate } = useDeleteItems();
 
   if (isLoading) return <Spinner />;
   console.log(listItems);
@@ -43,23 +47,23 @@ function List() {
           <option value="description">Sort by description</option>
           <option value="checked">Sort by checked status</option>
         </select>
-        <button
-          // onClick={onClearItems}
-          className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
-        >
-          Clear list
-        </button>
+        <Modal>
+          <Modal.Open>
+            <button className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700">
+              Clear list
+            </button>
+          </Modal.Open>
+          <Modal.Window>
+            <ConfirmDelete
+              resourceName="All"
+              disabled={isDeleting}
+              onConfirm={() => mutate()}
+            />
+          </Modal.Window>
+        </Modal>
       </div>
     </div>
   );
-
-  // return (
-  //   <div>
-  //     {listItems.map((listItem) => (
-  //       <div key={listItem.id}>{listItem.description}</div>
-  //     ))}
-  //   </div>
-  // );
 }
 
 export default List;

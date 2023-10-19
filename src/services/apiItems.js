@@ -26,12 +26,28 @@ export async function createItem(newItem) {
 }
 
 export async function deleteItem(id) {
-  const { data, error } = await supabase.from('items').delete().eq('id', id);
+  if (id) {
+    const { data, error } = await supabase.from('items').delete().eq('id', id);
 
-  if (error) {
-    console.error(error);
-    throw new Error('Items could not be deleted');
+    if (error) {
+      console.error(error);
+      throw new Error('The item could not be deleted');
+    }
+
+    return data;
   }
 
-  return data;
+  if (!id) {
+    const { data, error } = await supabase
+      .from('items')
+      .delete()
+      .not('id', 'is.null');
+
+    if (error) {
+      console.error(error);
+      throw new Error('Items could not be deleted');
+    }
+
+    return data;
+  }
 }

@@ -10,7 +10,8 @@ const sizes = {
   `,
   medium: css`
     font-size: 1.4rem;
-    padding: 1.2rem 1.6rem;
+    /* padding: 1.2rem 1.6rem; */
+    padding: 0.5rem 0.9rem;
     font-weight: 500;
   `,
   large: css`
@@ -23,10 +24,10 @@ const sizes = {
 const variations = {
   primary: css`
     color: #eef2ff;
-    background-color: #4338ca;
+    background-color: #4f46e5;
 
     &:hover {
-      background-color: #3730a3;
+      background-color: #4338ca;
     }
   `,
   secondary: css`
@@ -50,8 +51,8 @@ const variations = {
 
 const Button = styled.button`
   border: none;
-  border-radius: var(--border-radius-sm);
-  box-shadow: var(--shadow-sm);
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
