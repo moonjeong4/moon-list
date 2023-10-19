@@ -11,11 +11,14 @@ export async function getItems() {
   return data;
 }
 
-export async function createItem(newItem) {
-  const { data, error } = await supabase
-    .from('items')
-    .insert([newItem])
-    .select();
+export async function createEditItem(newItem, id) {
+  let query = supabase.from('items');
+
+  if (!id) query = query.insert([newItem]);
+
+  if (id) query = query.update(newItem).eq('id', id);
+
+  const { data, error } = await query.select();
 
   if (error) {
     console.error(error);

@@ -1,22 +1,33 @@
-// export default function Stats({ items }) {
-//   if (!items.length)
-//     return (
-//       <p className="mb-2 mr-4 text-center text-2xl text-yellow-200 ">
-//         <em>Start making the list 📝</em>
-//       </p>
-//     );
+import { useItems } from './useItems';
 
-//   const numItems = items.length;
-//   const numChecked = items.filter((item) => item.checked).length;
-//   const percentage = Math.round((numChecked / numItems) * 100);
+export default function Stats() {
+  const { listItems } = useItems();
 
-//   return (
-//     <footer className="mb-2 mr-4 text-center text-2xl text-yellow-200 ">
-//       <em>
-//         {percentage === 100
-//           ? 'You got everything!'
-//           : `${numItems} items, cleared ${numChecked} (${percentage}%)`}
-//       </em>
-//     </footer>
-//   );
-// }
+  if (!listItems)
+    return (
+      <p className="mb-2 mr-4 text-center text-2xl text-yellow-200 ">
+        Loading..
+      </p>
+    );
+
+  if (!listItems.length)
+    return (
+      <p className="mb-2 mr-4 text-center text-2xl text-yellow-200 ">
+        <em>Start making the list 📝</em>
+      </p>
+    );
+
+  const numItems = listItems.length;
+  const numChecked = listItems.filter((item) => item.checked).length;
+  const percentage = Math.round((numChecked / numItems) * 100);
+
+  return (
+    <footer className="mb-2 mr-4 text-center text-2xl text-yellow-200 ">
+      <em>
+        {percentage === 100
+          ? 'You got everything!'
+          : `${numItems} items, cleared ${numChecked} (${percentage}%)`}
+      </em>
+    </footer>
+  );
+}

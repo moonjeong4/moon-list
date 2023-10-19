@@ -1,44 +1,19 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createItem } from '../services/apiItems';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useCreateEditItems } from './useCreateEditItems';
 
 function Form() {
   const { register, handleSubmit, reset } = useForm();
 
-  const queryClient = useQueryClient();
-
-  const { mutate, isLoading: isCreating } = useMutation({
-    mutationFn: createItem,
-    onSuccess: () => {
-      toast.success('New item successfully added');
-      queryClient.invalidateQueries({ queryKey: ['items'] });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
-
-  // const [description, setDescription] = useState('');
-
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-
-  //   if (!description) return;
-
-  //   // const newItem = { description, checked: false, id: Date.now() };
-  //   // // console.log(newItem);
-
-  //   // onAddItems(newItem);
-
-  //   // setDescription('');
-  // }
+  const { isWorking, createItem, queryClient } = useCreateEditItems();
 
   function onSubmit(data) {
     const existingItems = queryClient.getQueryData(['items']);
     if (existingItems.some((item) => item.description === data.description))
       return toast.error('It already exists.');
 
-    mutate(data);
+    createItem(data);
+    reset();
   }
 
   function onError(errors) {
@@ -60,7 +35,7 @@ function Form() {
       />
       <button
         className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
-        disabled={isCreating}
+        disabled={isWorking}
       >
         Add
       </button>

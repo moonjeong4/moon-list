@@ -10,29 +10,28 @@ function List() {
   const [sortBy, setSortBy] = useState('input');
 
   const { isLoading, listItems } = useItems(); // can reuse like this in anywhere!
-  const { isDeleting, mutate } = useDeleteItems();
+  const { isDeleting, deleteItem } = useDeleteItems();
 
   if (isLoading) return <Spinner />;
-  console.log(listItems);
 
-  // let sortedItems;
+  let sortedItems;
 
-  // if (sortBy === 'input') sortedItems = items;
+  if (sortBy === 'input') sortedItems = listItems;
 
-  // if (sortBy === 'description')
-  //   sortedItems = items
-  //     .slice()
-  //     .sort((a, b) => a.description.localeCompare(b.description));
+  if (sortBy === 'description')
+    sortedItems = listItems
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description));
 
-  // if (sortBy === 'checked')
-  //   sortedItems = items
-  //     .slice()
-  //     .sort((a, b) => Number(a.checked) - Number(b.checked));
+  if (sortBy === 'checked')
+    sortedItems = listItems
+      .slice()
+      .sort((a, b) => Number(a.checked) - Number(b.checked));
 
   return (
     <div className="max-h-higher mb-2 flex flex-col items-center justify-between overflow-y-auto">
       <ul className="grid-cols-auto grid w-4/5 content-start justify-center gap-5 overflow-scroll py-8">
-        {listItems.map((item) => (
+        {sortedItems.map((item) => (
           <Item item={item} key={item.id} />
         ))}
       </ul>
@@ -57,7 +56,7 @@ function List() {
             <ConfirmDelete
               resourceName="All"
               disabled={isDeleting}
-              onConfirm={() => mutate()}
+              onConfirm={() => deleteItem()}
             />
           </Modal.Window>
         </Modal>
