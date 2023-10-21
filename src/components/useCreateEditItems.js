@@ -23,7 +23,5 @@ export function useCreateEditItems() {
     onError: (err) => toast.error(err.message),
   });
 
-  const isWorking = isCreating || isEditing;
-
-  return { isWorking, createItem, editItem, queryClient };
+  return { isCreating, isEditing, createItem, editItem, queryClient };
 }

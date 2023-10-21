@@ -6,13 +6,13 @@ import { useCreateEditItems } from './useCreateEditItems';
 export default function Item({ item }) {
   const { id: itemId, description, checked } = item;
   const { isDeleting, deleteItem } = useDeleteItems();
-  const { isWorking, editItem } = useCreateEditItems();
+  const { isEditing, editItem } = useCreateEditItems();
+
+  const isWorking = isEditing || isDeleting;
 
   const handleCheckboxChange = async () => {
-    // Toggle the "checked" status
     const updatedItem = { ...item, checked: !checked };
 
-    // Call the editItem function to update the item
     editItem({ newItemData: updatedItem, id: itemId });
   };
 
@@ -33,7 +33,7 @@ export default function Item({ item }) {
         <Modal.Window>
           <ConfirmDelete
             resourceName={description}
-            disabled={isDeleting}
+            disabled={isWorking}
             onConfirm={() => deleteItem(itemId)}
           />
         </Modal.Window>

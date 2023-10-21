@@ -5,11 +5,17 @@ import { useCreateEditItems } from './useCreateEditItems';
 function Form() {
   const { register, handleSubmit, reset } = useForm();
 
-  const { isWorking, createItem, queryClient } = useCreateEditItems();
+  const { isCreating, createItem, queryClient } = useCreateEditItems();
 
   function onSubmit(data) {
     const existingItems = queryClient.getQueryData(['items']);
-    if (existingItems.some((item) => item.description === data.description))
+    if (
+      existingItems.some(
+        (item) =>
+          item.description.trim().toLowerCase() ===
+          data.description.trim().toLowerCase(),
+      )
+    )
       return toast.error('It already exists.');
 
     createItem(data);
@@ -35,7 +41,7 @@ function Form() {
       />
       <button
         className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
-        disabled={isWorking}
+        disabled={isCreating}
       >
         Add
       </button>

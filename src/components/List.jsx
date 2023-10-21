@@ -5,12 +5,14 @@ import { useItems } from './useItems';
 import { useDeleteItems } from './useDeleteItems';
 import Modal from '../ui/Modal';
 import ConfirmDelete from '../ui/ConfirmDelete';
+import { useCreateEditItems } from './useCreateEditItems';
 
 function List() {
-  const [sortBy, setSortBy] = useState('input');
+  const [sortBy, setSortBy] = useState('checked');
 
-  const { isLoading, listItems } = useItems(); // can reuse like this in anywhere!
+  const { isLoading, listItems } = useItems();
   const { isDeleting, deleteItem } = useDeleteItems();
+  const { isCreating, isEditing } = useCreateEditItems();
 
   if (isLoading) return <Spinner />;
 
@@ -42,9 +44,9 @@ function List() {
           onChange={(e) => setSortBy(e.target.value)}
           className="mr-3 rounded-lg border border-gray-300 p-1.5"
         >
-          <option value="input">Sort by input order</option>
-          <option value="description">Sort by description</option>
           <option value="checked">Sort by checked status</option>
+          <option value="description">Sort by description</option>
+          <option value="input">Sort by input order</option>
         </select>
         <Modal>
           <Modal.Open>
@@ -55,7 +57,7 @@ function List() {
           <Modal.Window>
             <ConfirmDelete
               resourceName="All"
-              disabled={isDeleting}
+              disabled={isDeleting || isEditing || isCreating}
               onConfirm={() => deleteItem()}
             />
           </Modal.Window>
