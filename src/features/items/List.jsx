@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Item from './Item';
-import Spinner from '../ui/Spinner';
+import Spinner from '../../ui/Spinner';
 import { useItems } from './useItems';
 import { useDeleteItems } from './useDeleteItems';
-import Modal from '../ui/Modal';
-import ConfirmDelete from '../ui/ConfirmDelete';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useCreateEditItems } from './useCreateEditItems';
 
 function List() {
@@ -31,8 +31,8 @@ function List() {
       .sort((a, b) => Number(a.checked) - Number(b.checked));
 
   return (
-    <div className="max-h-higher mb-2 flex flex-col items-center justify-between overflow-y-auto">
-      <ul className="grid-cols-auto grid w-4/5 content-start justify-center gap-5 overflow-scroll py-8">
+    <div className="mb-2 flex max-h-higher flex-col items-center justify-between overflow-y-auto">
+      <ul className="grid w-4/5 grid-cols-auto content-start justify-center gap-5 overflow-scroll py-8">
         {sortedItems.map((item) => (
           <Item item={item} key={item.id} />
         ))}

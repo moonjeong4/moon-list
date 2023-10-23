@@ -1,5 +1,5 @@
-import Modal from '../ui/Modal';
-import ConfirmDelete from '../ui/ConfirmDelete';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useDeleteItems } from './useDeleteItems';
 import { useCreateEditItems } from './useCreateEditItems';
 
