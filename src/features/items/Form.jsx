@@ -28,11 +28,9 @@ function Form() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)} className="text-center">
-      <h3 className="mb-2 mr-4 text-2xl text-yellow-200">
-        Add it to the list. 📋
-      </h3>
+      <h3 className="mb-2 mr-4 text-2xl">Add it to the list. 📋</h3>
       <input
-        className="mr-3 rounded-lg border border-gray-300 p-1"
+        className="mr-3 rounded-lg border border-gray-300 p-1 text-gray-700"
         type="text"
         {...register('description', {
           required: "The field can't be empty!",

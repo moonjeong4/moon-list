@@ -9,6 +9,9 @@ export default {
       maxHeight: {
         higher: '36rem',
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans'],
+      },
     },
   },
   plugins: [],

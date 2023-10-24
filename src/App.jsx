@@ -2,8 +2,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 import Items from './pages/Items';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PageNotFound from './pages/PageNotFound';
+import Login from './pages/Login';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,9 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
+          <Route index element={<Navigate replace to="items" />} />
           <Route path="items" element={<Items />} />
+          <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

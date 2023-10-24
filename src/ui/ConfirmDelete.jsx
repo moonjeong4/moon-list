@@ -21,6 +21,7 @@ const StyledConfirmDelete = styled.div`
 const Heading = styled.h3`
   font-size: 2rem;
   font-weight: 500;
+  color: #374151;
 `;
 
 function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
