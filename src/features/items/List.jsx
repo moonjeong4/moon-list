@@ -42,7 +42,7 @@ function List() {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="mr-3 rounded-lg border border-gray-300 p-1.5 text-gray-700"
+          className="mr-3 rounded-lg border border-gray-300 p-1.5 "
         >
           <option value="checked">Sort by checked status</option>
           <option value="description">Sort by description</option>

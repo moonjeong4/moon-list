@@ -1,11 +1,11 @@
-import Form from '../features/items/Form';
+import Form from '../features/items/ItemForm';
 import List from '../features/items/List';
 import ItemsHeading from '../features/items/ItemsHeading';
 import Stats from '../features/items/Stats';
 
 function Items() {
   return (
-    <div className="h-[100vh] bg-sky-950">
+    <div>
       <ItemsHeading />
       <Form />
       <List />

@@ -5,6 +5,8 @@ import Items from './pages/Items';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PageNotFound from './pages/PageNotFound';
 import Login from './pages/Login';
+import AppLayout from './ui/AppLayout';
+import ProtectedRoute from './ui/ProtectedRoute';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,8 +22,16 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate replace to="items" />} />
-          <Route path="items" element={<Items />} />
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate replace to="items" />} />
+            <Route path="items" element={<Items />} />
+          </Route>
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

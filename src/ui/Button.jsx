@@ -24,10 +24,10 @@ const sizes = {
 const variations = {
   primary: css`
     color: #eef2ff;
-    background-color: #4f46e5;
+    background-color: #3b82f6;
 
     &:hover {
-      background-color: #4338ca;
+      background-color: #1d4ed8;
     }
   `,
   secondary: css`
@@ -53,6 +53,9 @@ const Button = styled.button`
   border: none;
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
