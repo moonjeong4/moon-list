@@ -6,6 +6,7 @@ import { useDeleteItems } from './useDeleteItems';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useCreateEditItems } from './useCreateEditItems';
+import { useUser } from '../authentication/useUser';
 
 function List() {
   const [sortBy, setSortBy] = useState('checked');
@@ -13,6 +14,8 @@ function List() {
   const { isLoading, listItems } = useItems();
   const { isDeleting, deleteItem } = useDeleteItems();
   const { isCreating, isEditing } = useCreateEditItems();
+
+  const { user } = useUser();
 
   if (isLoading) return <Spinner />;
 
@@ -31,8 +34,8 @@ function List() {
       .sort((a, b) => Number(a.checked) - Number(b.checked));
 
   return (
-    <div className="mb-2 flex max-h-higher flex-col items-center justify-between overflow-y-auto">
-      <ul className="grid w-4/5 grid-cols-auto content-start justify-center gap-5 overflow-scroll py-8">
+    <div className="mb-2 flex max-h-higher flex-col items-center justify-between">
+      <ul className="grid w-4/5 grid-cols-auto content-start justify-center gap-5  overflow-scroll py-8">
         {sortedItems.map((item) => (
           <Item item={item} key={item.id} />
         ))}
@@ -58,7 +61,7 @@ function List() {
             <ConfirmDelete
               resourceName="All"
               disabled={isDeleting || isEditing || isCreating}
-              onConfirm={() => deleteItem()}
+              onConfirm={() => deleteItem(user.id)}
             />
           </Modal.Window>
         </Modal>

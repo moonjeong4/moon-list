@@ -3,7 +3,7 @@ import Header from './Header';
 
 function AppLayout() {
   return (
-    <div className="h-[100vh] bg-sky-950">
+    <div className="h-screen bg-sky-950">
       <Header />
       <Outlet />
     </div>

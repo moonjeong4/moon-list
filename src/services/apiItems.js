@@ -1,7 +1,10 @@
 import supabase from './supabase';
 
-export async function getItems() {
-  let { data, error } = await supabase.from('items').select('*');
+export async function getItems(user) {
+  let { data, error } = await supabase
+    .from('items')
+    .select('*')
+    .eq('userId', user.id);
 
   if (error) {
     console.error(error);
@@ -29,7 +32,7 @@ export async function createEditItem(newItem, id) {
 }
 
 export async function deleteItem(id) {
-  if (id) {
+  if (typeof id === 'number') {
     const { data, error } = await supabase.from('items').delete().eq('id', id);
 
     if (error) {
@@ -40,11 +43,24 @@ export async function deleteItem(id) {
     return data;
   }
 
-  if (!id) {
+  if (Array.isArray(id)) {
+    if (id.length === 0) throw new Error("There's no checked items.");
+
+    const { data, error } = await supabase.from('items').delete().in('id', id);
+
+    if (error) {
+      console.error(error);
+      throw new Error('Items could not be deleted');
+    }
+
+    return data;
+  }
+
+  if (typeof id === 'string') {
     const { data, error } = await supabase
       .from('items')
       .delete()
-      .not('id', 'is.null');
+      .eq('userId', id);
 
     if (error) {
       console.error(error);
