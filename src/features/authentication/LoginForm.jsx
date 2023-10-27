@@ -5,10 +5,12 @@ import Input from '../../ui/Input';
 import FormRowVertical from '../../ui/FormRowVertical';
 import { useLogin } from './useLogin';
 import SpinnerMini from '../../ui/SpinnerMini';
+import { useEnMode } from '../../context/EnModeContext';
 
 function LoginForm() {
-  const [email, setEmail] = useState('moon@example.com');
-  const [password, setPassword] = useState('pass1234');
+  const { isEnMode } = useEnMode();
+  const [email, setEmail] = useState('test@test.com');
+  const [password, setPassword] = useState('qwerty');
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {

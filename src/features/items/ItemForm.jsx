@@ -6,6 +6,7 @@ import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useDeleteItems } from './useDeleteItems';
 import { useItems } from './useItems';
 import { useUser } from '../authentication/useUser';
+import { useEnMode } from '../../context/EnModeContext';
 
 function Form() {
   const { register, handleSubmit, reset } = useForm();
@@ -14,6 +15,8 @@ function Form() {
   const { listItems } = useItems();
   const { isCreating, isEditing, createItem } = useCreateEditItems();
   const { isDeleting, deleteItem } = useDeleteItems();
+
+  const { isEnMode } = useEnMode();
 
   function onSubmit(data) {
     if (
@@ -45,7 +48,7 @@ function Form() {
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)} className="text-center">
         <h3 className="mb-2 text-2xl text-yellow-200">
-          Add it to the list. 📋
+          {isEnMode ? 'Add it to the list. 📋' : 'Ajoutez-le à la liste. 📋'}
         </h3>
         <input
           className="mb-3 mr-3 rounded-lg border border-gray-300 p-1 "
@@ -68,7 +71,7 @@ function Form() {
             className="mx-auto block rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
             disabled={isCreating}
           >
-            clear checked items
+            delete checked items
           </button>
         </Modal.Open>
         <Modal.Window>
