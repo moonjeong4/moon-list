@@ -2,8 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login as loginApi } from '../../services/apiAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useEnMode } from '../../context/EnModeContext';
 
 export function useLogin() {
+  const { isEnMode } = useEnMode();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -14,8 +16,12 @@ export function useLogin() {
       navigate('/items', { replace: true });
     },
     onError: (err) => {
-      console.log('ERROR', err);
-      toast.error('Provided email or password are incorrect');
+      // console.log('ERROR', err);
+      toast.error(
+        isEnMode
+          ? 'Provided email or password are incorrect'
+          : "L'adresse courriel ou le mot de passe fourni sont incorrects",
+      );
     },
   });
 

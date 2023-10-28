@@ -1,19 +1,23 @@
+import { useEnMode } from '../../context/EnModeContext';
 import { useItems } from './useItems';
 
 export default function Stats() {
   const { listItems } = useItems();
+  const { isEnMode } = useEnMode();
 
   if (!listItems)
     return (
       <p className="mb-2 mr-4 text-center text-2xl text-yellow-200">
-        Loading..
+        {isEnMode ? 'Loading..' : 'Charge..'}
       </p>
     );
 
   if (!listItems.length)
     return (
       <p className="mb-2 mr-4 text-center text-2xl text-yellow-200">
-        <em>Start making the list 📝</em>
+        <em>
+          {isEnMode ? 'Start making the list 📝' : 'Commencez à faire 📝'}
+        </em>
       </p>
     );
 
@@ -25,8 +29,12 @@ export default function Stats() {
     <footer className="mb-2 mr-4 text-center text-2xl text-yellow-200">
       <em>
         {percentage === 100
-          ? 'You got everything!'
-          : `${numItems} items, cleared ${numChecked} (${percentage}%)`}
+          ? isEnMode
+            ? 'You got everything!'
+            : 'Vous avez tout !'
+          : isEnMode
+          ? `${numItems} things, cleared ${numChecked} (${percentage}%)`
+          : `${numItems} choses, effacé ${numChecked} (${percentage}%)`}
       </em>
     </footer>
   );

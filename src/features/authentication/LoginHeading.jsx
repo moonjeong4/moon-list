@@ -1,7 +1,10 @@
+import { useEnMode } from '../../context/EnModeContext';
+
 function LoginHeading() {
+  const { isEnMode } = useEnMode();
   return (
     <h4 className="text-center text-3xl font-semibold text-yellow-400">
-      Log in to your account
+      {isEnMode ? 'Log in to your account' : 'Connectez-vous à votre compte'}
     </h4>
   );
 }

@@ -5,6 +5,7 @@ import FormRowVertical from '../../ui/FormRowVertical';
 import Input from '../../ui/Input';
 import { useSignup } from './useSignup';
 import { useLogin } from './useLogin';
+import { useEnMode } from '../../context/EnModeContext';
 
 // Email regex: /\S+@\S+\.\S+/
 
@@ -13,6 +14,7 @@ function SignupForm() {
   const { login, isLoading: isLoggingIn } = useLogin();
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
+  const { isEnMode } = useEnMode();
 
   const isWorking = isLoading || isLoggingIn;
 
@@ -30,32 +32,50 @@ function SignupForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRowVertical label="Full name" error={errors?.fullName?.message}>
+      <FormRowVertical
+        label={isEnMode ? 'Full name' : 'Nom et prénom'}
+        error={errors?.fullName?.message}
+      >
         <Input
           type="text"
           id="fullName"
           disabled={isWorking}
-          {...register('fullName', { required: 'This field is required' })}
+          {...register('fullName', {
+            required: isEnMode
+              ? 'This field is required'
+              : 'Ce champ est obligatoire',
+          })}
         />
       </FormRowVertical>
 
-      <FormRowVertical label="Email address" error={errors?.email?.message}>
+      <FormRowVertical
+        label={isEnMode ? 'Email address' : 'Adresse courriel'}
+        error={errors?.email?.message}
+      >
         <Input
           type="email"
           id="email"
           disabled={isWorking}
           {...register('email', {
-            required: 'This field is required',
+            required: isEnMode
+              ? 'This field is required'
+              : 'Ce champ est obligatoire',
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: 'Please provide a valid email address',
+              message: isEnMode
+                ? 'Please provide a valid email address'
+                : 'Veuillez fournir une adresse courriel valide',
             },
           })}
         />
       </FormRowVertical>
 
       <FormRowVertical
-        label="Password (min 6 characters)"
+        label={
+          isEnMode
+            ? 'Password (min 6 characters)'
+            : 'Mot de passe (min 6 caractères)'
+        }
         error={errors?.password?.message}
       >
         <Input
@@ -63,17 +83,21 @@ function SignupForm() {
           id="password"
           disabled={isWorking}
           {...register('password', {
-            required: 'This field is required',
+            required: isEnMode
+              ? 'This field is required'
+              : 'Ce champ est obligatoire',
             minLength: {
               value: 6,
-              message: 'Password needs a minimum of 6 characters',
+              message: isEnMode
+                ? 'Password needs a minimum of 6 characters'
+                : 'Il nécessite un minimum de 6 caractères',
             },
           })}
         />
       </FormRowVertical>
 
       <FormRowVertical
-        label="Repeat password"
+        label={isEnMode ? 'Repeat password' : 'Répétez le mot de passe'}
         error={errors?.passwordConfirm?.message}
       >
         <Input
@@ -81,9 +105,14 @@ function SignupForm() {
           id="passwordConfirm"
           disabled={isWorking}
           {...register('passwordConfirm', {
-            required: 'This field is required',
+            required: isEnMode
+              ? 'This field is required'
+              : 'Ce champ est obligatoire',
             validate: (value) =>
-              value === getValues().password || 'Passwords need to match',
+              value === getValues().password ||
+              (isEnMode
+                ? 'Passwords need to match'
+                : 'Il doivent correspondre'),
           })}
         />
       </FormRowVertical>
@@ -96,9 +125,11 @@ function SignupForm() {
           disabled={isWorking}
           onClick={reset}
         >
-          Reset
+          {isEnMode ? 'Reset' : 'Réinitialiser'}
         </Button>
-        <Button disabled={isWorking}>Create new user</Button>
+        <Button disabled={isWorking}>
+          {isEnMode ? 'Create new user' : 'Créez un nouvel'}
+        </Button>
       </FormRowVertical>
     </Form>
   );

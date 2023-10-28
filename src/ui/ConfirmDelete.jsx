@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from './Button';
+import { useEnMode } from '../context/EnModeContext';
 
 const StyledConfirmDelete = styled.div`
   width: 15rem;
@@ -25,12 +26,16 @@ const Heading = styled.h3`
 `;
 
 function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
+  const { isEnMode } = useEnMode();
   return (
     <StyledConfirmDelete>
-      <Heading>Delete {resourceName}</Heading>
+      <Heading>
+        {isEnMode ? `Delete ${resourceName}` : `supprimer ${resourceName}`}
+      </Heading>
       <p>
-        Are you sure you want to delete {resourceName} permanently? This action
-        cannot be undone.
+        {isEnMode
+          ? `Are you sure you want to delete ${resourceName} permanently? This action cannot be undone.`
+          : `Êtes-vous sûr de vouloir supprimer définitivement ${resourceName} ? Cette action ne peut pas être annulée.`}
       </p>
 
       <div>
@@ -39,7 +44,7 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
           disabled={disabled}
           onClick={onCloseModal}
         >
-          Cancel
+          {isEnMode ? 'Cancel' : 'Non'}
         </Button>
         <Button
           variation="danger"
@@ -49,7 +54,7 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
             onCloseModal();
           }}
         >
-          Delete
+          {isEnMode ? 'Delete' : 'supprimer'}
         </Button>
       </div>
     </StyledConfirmDelete>

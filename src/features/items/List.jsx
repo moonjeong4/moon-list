@@ -7,6 +7,7 @@ import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useCreateEditItems } from './useCreateEditItems';
 import { useUser } from '../authentication/useUser';
+import { useEnMode } from '../../context/EnModeContext';
 
 function List() {
   const [sortBy, setSortBy] = useState('checked');
@@ -14,6 +15,7 @@ function List() {
   const { isLoading, listItems } = useItems();
   const { isDeleting, deleteItem } = useDeleteItems();
   const { isCreating, isEditing } = useCreateEditItems();
+  const { isEnMode } = useEnMode();
 
   const { user } = useUser();
 
@@ -47,19 +49,25 @@ function List() {
           onChange={(e) => setSortBy(e.target.value)}
           className="mr-3 rounded-lg border border-gray-300 p-1.5 "
         >
-          <option value="checked">Sort by checked status</option>
-          <option value="description">Sort by description</option>
-          <option value="input">Sort by input order</option>
+          <option value="checked">
+            {isEnMode ? 'Sort by checked status' : 'Par statut vérifié'}
+          </option>
+          <option value="description">
+            {isEnMode ? 'Sort by description' : 'Par description'}
+          </option>
+          <option value="input">
+            {isEnMode ? 'Sort by input order' : 'Par ordre de saisie'}
+          </option>
         </select>
         <Modal>
           <Modal.Open>
             <button className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700">
-              Clear list
+              {isEnMode ? 'clear list' : 'effacer tout'}
             </button>
           </Modal.Open>
           <Modal.Window>
             <ConfirmDelete
-              resourceName="All"
+              resourceName={isEnMode ? 'All' : 'Tout'}
               disabled={isDeleting || isEditing || isCreating}
               onConfirm={() => deleteItem(user.id)}
             />

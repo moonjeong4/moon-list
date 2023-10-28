@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { useMoveBack } from '../hooks/useMoveBack';
+import { useEnMode } from '../context/EnModeContext';
 
 const StyledPageNotFound = styled.main`
   height: 100vh;
@@ -28,15 +29,18 @@ const Box = styled.div`
 
 function PageNotFound() {
   const moveBack = useMoveBack();
+  const { isEnMode } = useEnMode();
 
   return (
     <StyledPageNotFound>
       <Box>
         <header className="text-3xl font-semibold">
-          The page you are looking for could not be found 😢
+          {isEnMode
+            ? 'The page you are looking for could not be found 😢'
+            : 'La page que vous recherchez est introuvable. 😢'}
         </header>
         <button onClick={moveBack} size="large">
-          &larr; Go back
+          &larr; {isEnMode ? 'Go back' : 'Retourner'}
         </button>
       </Box>
     </StyledPageNotFound>

@@ -5,12 +5,14 @@ import FormRowVertical from '../../ui/FormRowVertical';
 import Input from '../../ui/Input';
 
 import { useUpdateUser } from './useUpdateUser';
+import { useEnMode } from '../../context/EnModeContext';
 
 function UpdatePasswordForm({ onCloseModal }) {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
 
   const { updateUser, isUpdating } = useUpdateUser();
+  const { isEnMode } = useEnMode();
 
   function onSubmit({ password }) {
     updateUser({ password }, { onSuccess: reset });
@@ -20,7 +22,11 @@ function UpdatePasswordForm({ onCloseModal }) {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRowVertical
-        label="New password (min 6 chars)"
+        label={
+          isEnMode
+            ? 'New password (min 6 chars)'
+            : 'Nouveau mot de passe (min 6 caractères)'
+        }
         error={errors?.password?.message}
       >
         <Input
@@ -29,17 +35,21 @@ function UpdatePasswordForm({ onCloseModal }) {
           autoComplete="current-password"
           disabled={isUpdating}
           {...register('password', {
-            required: 'This field is required',
+            required: isEnMode
+              ? 'This field is required'
+              : 'Ce champ est obligatoire',
             minLength: {
               value: 6,
-              message: 'Password needs a minimum of 6 characters',
+              message: isEnMode
+                ? 'Password needs a minimum of 6 characters'
+                : 'Il nécessite un minimum de 6 caractères',
             },
           })}
         />
       </FormRowVertical>
 
       <FormRowVertical
-        label="Confirm password"
+        label={isEnMode ? 'Confirm password' : 'Confirmez le mot de passe'}
         error={errors?.passwordConfirm?.message}
       >
         <Input
@@ -48,17 +58,24 @@ function UpdatePasswordForm({ onCloseModal }) {
           id="passwordConfirm"
           disabled={isUpdating}
           {...register('passwordConfirm', {
-            required: 'This field is required',
+            required: isEnMode
+              ? 'This field is required'
+              : 'Ce champ est obligatoire',
             validate: (value) =>
-              getValues().password === value || 'Passwords need to match',
+              getValues().password === value ||
+              (isEnMode
+                ? 'Passwords need to match'
+                : 'Il doivent correspondre'),
           })}
         />
       </FormRowVertical>
       <FormRowVertical>
         <Button onClick={reset} type="reset" variation="secondary">
-          Reset
+          {isEnMode ? 'Reset' : 'Réinitialiser'}
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+        <Button disabled={isUpdating}>
+          {isEnMode ? 'Update password' : 'Mettre à jour le mot de passe'}
+        </Button>
       </FormRowVertical>
     </Form>
   );

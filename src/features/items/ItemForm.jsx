@@ -26,7 +26,7 @@ function Form() {
           data.description.trim().toLowerCase(),
       )
     )
-      return toast.error('It already exists.');
+      return toast.error(isEnMode ? 'It already exists.' : 'Cela existe déjà.');
 
     createItem({ ...data, userId: user.id });
     reset();
@@ -54,15 +54,17 @@ function Form() {
           className="mb-3 mr-3 rounded-lg border border-gray-300 p-1 "
           type="text"
           {...register('description', {
-            required: "The field can't be empty!",
+            required: isEnMode
+              ? "The field can't be empty!"
+              : 'Le champ ne peut pas être vide!',
           })}
-          placeholder="type items please.."
+          placeholder={isEnMode ? 'type it here please..' : 'tapez-le ici..'}
         />
         <button
           className="rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
           disabled={isCreating}
         >
-          Add
+          {isEnMode ? 'add' : 'ajouter'}
         </button>
       </form>
       <Modal>
@@ -71,12 +73,12 @@ function Form() {
             className="mx-auto block rounded-lg bg-blue-500 p-1.5 uppercase text-white hover:bg-blue-700"
             disabled={isCreating}
           >
-            delete checked items
+            {isEnMode ? 'delete checked things' : 'supprimer les cochés'}
           </button>
         </Modal.Open>
         <Modal.Window>
           <ConfirmDelete
-            resourceName="Checked Items"
+            resourceName={isEnMode ? 'Checked things' : 'les cochés'}
             disabled={isDeleting || isEditing}
             onConfirm={onDeleteChecked}
           />

@@ -7,7 +7,7 @@ export default {
         auto: 'repeat(auto-fit, minmax(200px, 1fr))',
       },
       maxHeight: {
-        higher: '30rem',
+        higher: '24rem',
       },
       fontFamily: {
         poppins: ['Poppins', 'sans'],

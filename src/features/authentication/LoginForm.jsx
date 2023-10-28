@@ -8,10 +8,10 @@ import SpinnerMini from '../../ui/SpinnerMini';
 import { useEnMode } from '../../context/EnModeContext';
 
 function LoginForm() {
-  const { isEnMode } = useEnMode();
-  const [email, setEmail] = useState('test@test.com');
-  const [password, setPassword] = useState('qwerty');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login, isLoading } = useLogin();
+  const { isEnMode } = useEnMode();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,7 +29,7 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRowVertical label="Email address">
+      <FormRowVertical label={isEnMode ? 'Email address' : 'Adresse courriel'}>
         <Input
           type="email"
           id="email"
@@ -41,7 +41,7 @@ function LoginForm() {
         />
       </FormRowVertical>
 
-      <FormRowVertical label="Password">
+      <FormRowVertical label={isEnMode ? 'Password' : 'Mot de passe'}>
         <Input
           type="password"
           id="password"
@@ -53,7 +53,15 @@ function LoginForm() {
       </FormRowVertical>
       <FormRowVertical>
         <Button size="small" disabled={isLoading}>
-          {!isLoading ? 'Log in' : <SpinnerMini />}
+          {!isLoading ? (
+            isEnMode ? (
+              'Log in'
+            ) : (
+              'Connectez-vous'
+            )
+          ) : (
+            <SpinnerMini />
+          )}
         </Button>
       </FormRowVertical>
     </Form>

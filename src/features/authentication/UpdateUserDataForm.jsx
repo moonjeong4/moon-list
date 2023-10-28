@@ -9,6 +9,7 @@ import Input from '../../ui/Input';
 import { useUser } from './useUser';
 import { useUpdateUser } from './useUpdateUser';
 import FormRowFile from '../../ui/FormFile';
+import { useEnMode } from '../../context/EnModeContext';
 
 function UpdateUserDataForm({ onCloseModal }) {
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
@@ -23,6 +24,7 @@ function UpdateUserDataForm({ onCloseModal }) {
 
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
+  const { isEnMode } = useEnMode();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -46,7 +48,7 @@ function UpdateUserDataForm({ onCloseModal }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRowVertical label="Email address">
+      <FormRowVertical label={isEnMode ? 'Email address' : 'Adresse courriel'}>
         <input
           type="text"
           value={email}
@@ -54,7 +56,7 @@ function UpdateUserDataForm({ onCloseModal }) {
           className="rounded border border-gray-300 bg-gray-300 p-1 px-2 shadow-sm"
         />
       </FormRowVertical>
-      <FormRowVertical label="Full name">
+      <FormRowVertical label={isEnMode ? 'Full name' : 'Nom et prénom'}>
         <Input
           type="text"
           value={fullName}
@@ -63,7 +65,7 @@ function UpdateUserDataForm({ onCloseModal }) {
           disabled={isUpdating}
         />
       </FormRowVertical>
-      <FormRowFile label="Avatar image">
+      <FormRowFile label={isEnMode ? 'Avatar image' : "Image d'avatar"}>
         <FileInput
           id="avatar"
           accept="image/*"
@@ -78,9 +80,11 @@ function UpdateUserDataForm({ onCloseModal }) {
           disabled={isUpdating}
           onClick={handleCancel}
         >
-          Reset
+          {isEnMode ? 'Reset' : 'Réinitialiser'}
         </Button>
-        <Button disabled={isUpdating}>Update account</Button>
+        <Button disabled={isUpdating}>
+          {isEnMode ? 'Update account' : 'Mettre à jour le compte'}
+        </Button>
       </FormRowVertical>
     </Form>
   );
