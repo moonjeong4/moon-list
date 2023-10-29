@@ -46,12 +46,15 @@ function Form() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="text-center">
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className="mb-3 text-center"
+      >
         <h3 className="mb-2 text-2xl text-yellow-200">
           {isEnMode ? 'Add it to the list. 📋' : 'Ajoutez-le à la liste. 📋'}
         </h3>
         <input
-          className="mb-3 mr-3 rounded-lg border border-gray-300 p-1 "
+          className="mr-3 rounded-lg border border-gray-300 p-1 "
           type="text"
           {...register('description', {
             required: isEnMode

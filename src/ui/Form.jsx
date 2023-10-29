@@ -9,6 +9,7 @@ const Form = styled.form`
       background-color: #fff;
       border: 1px solid #f3f4f6;
       border-radius: 7px;
+      width: 18rem;
     `}
 
   ${(props) =>
@@ -18,7 +19,7 @@ const Form = styled.form`
     `}
     
   overflow: hidden;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 `;
 
 Form.defaultProps = {

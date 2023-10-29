@@ -13,13 +13,13 @@ const LoginLayout = styled.main`
   grid-template-columns: 18rem;
   align-content: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 2rem;
 `;
 
 function Login() {
   const { isEnMode } = useEnMode();
   return (
-    <div className="h-screen bg-sky-950">
+    <>
       <div className="flex justify-end px-8 py-4">
         <EnModeToggle />
       </div>
@@ -38,7 +38,7 @@ function Login() {
           </Modal.Window>
         </Modal>
       </LoginLayout>
-    </div>
+    </>
   );
 }
 

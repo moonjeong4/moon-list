@@ -8,6 +8,7 @@ import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useCreateEditItems } from './useCreateEditItems';
 import { useUser } from '../authentication/useUser';
 import { useEnMode } from '../../context/EnModeContext';
+import Stats from './Stats';
 
 function List() {
   const [sortBy, setSortBy] = useState('checked');
@@ -36,8 +37,8 @@ function List() {
       .sort((a, b) => Number(a.checked) - Number(b.checked));
 
   return (
-    <div className="mb-2 flex max-h-higher flex-col items-center justify-between">
-      <ul className="grid w-4/5 grid-cols-auto content-start justify-center gap-5  overflow-scroll py-8">
+    <div className="flex flex-col items-center justify-between">
+      <ul className="grid w-4/5 grid-cols-auto content-start justify-center gap-5 py-8">
         {sortedItems.map((item) => (
           <Item item={item} key={item.id} />
         ))}
@@ -74,6 +75,7 @@ function List() {
           </Modal.Window>
         </Modal>
       </div>
+      <Stats listItems={listItems} isEnMode={isEnMode} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ function Items() {
     <div>
       <Form />
       <List />
-      <Stats />
+      {/* <Stats /> */}
     </div>
   );
 }
